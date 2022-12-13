@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Guide: Introduction to Portworx</title>
+<title>Lab Guide: Portworx Lab Command Guide</title>
 <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
@@ -11,21 +11,36 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
 <script src="copying.js"></script>
 
+<h1><img src="portworx-logo-2.png" width="220" height="94" alt=""></h1>
 <h1><strong>Portworx Lab Command Guide</strong></h1>
 <div class="copied">
 </div>
 
 <dive>
-  <p style="font-weight: bolder;"> Web Application Link:
-  <a href="http://master.portworx.testdrive:30123/" target="_blank">http://master.portworx.testdrive:30123/</a>
+  <p style="font-weight: bolder;"> This is the step by step procedure to successfuly install Portworx 2.12 in a 3 node cluster using FlashArray Cloud Drives and deploy a simple application. Learners can skip the installation steps by running the install scrpit below and skip to Step 10.&nbsp; &nbsp;&nbsp; <a href="http://master.portworx.testdrive:30123/" target="_blank">http://master.portworx.testdrive:30123/</a>
   </p>
 </dive>
 
 <div class="mainbucket">
 <div class="buttonpad">
+
+<button class="copy-button px-button" data-clipboard-action="copy" data-clipboard-target="#copystep00">Copy</button>
+</div>
+<div id="copystep00">
+<code>
+cd /home/pureuser/skytap-px-2.12
+</br>
+./px-op-deploy-skytap.sh
+</br>
+</code>
+</div>
+	
+	
+<div class="mainbucket">
+<div class="buttonpad">
 <h5>Step 1: Check if K8 Nodes are Ready</h5>
 <button class="copy-button px-button" data-clipboard-action="copy" data-clipboard-target="#copystep0">Copy</button>
-  <p style="font-style: italic;">Check to make sure your all the workere nodes are running</p>
+  <p style="font-style: italic;">Check to make sure your all the workere nodes are running.</p>
 </div>
 <div id="copystep0">
 <code>
@@ -38,7 +53,7 @@ kubectl get nodes
 <div class="buttonpad">
 <h5>Step 2: Create K8 Namespace called "portworx" and verify&nbsp; &nbsp;</h5>
 <button class="copy-button px-button" data-clipboard-action="copy" data-clipboard-target="#copystep1">Copy</button>
-  <p style="font-style: italic;">Starting PX 2.12, protworx&nbsp; by default will be installed inside the "portworx" namespace&nbsp;</p>
+  <p style="font-style: italic;">Starting PX 2.12, protworx&nbsp; by default will be installed inside the "portworx" namespac.&nbsp;</p>
 </div>
 <div id="copystep1">
 <code>
@@ -55,7 +70,7 @@ kubectl get ns -A
 <div class="buttonpad">
 <h5>Step 3: Check FA/FB JSON file API token</h5>
 <button class="copy-button px-button" data-clipboard-action="copy" data-clipboard-target="#copystep2">Copy</button>
-  <p style="font-style: italic;">Optional: Double check API Token is the same for user "pureuser" for both FA and FB</p>
+  <p style="font-style: italic;">Optional: Double check API Token is the same for user "pureuser" for both FA and FB. Portworx uses a single secret for both FlashArray and FlashBlade configuration.</p>
 </div>
 <div id="copystep2">
 <code>
@@ -70,7 +85,7 @@ cat pure.json
 <div class="buttonpad">
 <h5>Step 4: Install&nbsp;Kubernetes Secret called "px-pure-secret" and verify</h5>
 <button class="copy-button px-button" data-clipboard-action="copy" data-clipboard-target="#copystep3">Copy</button>
-  <p style="font-style: italic;">Verify if the secret "px-pure-secret" was successfully installed&nbsp;&nbsp;</p>
+  <p style="font-style: italic;">Verify if the secret "px-pure-secret" was successfully installed.&nbsp;&nbsp;</p>
 </div>
 <div id="copystep3">
 <code>
@@ -101,8 +116,8 @@ kubectl apply -f 'https://install.portworx.com/2.11?comp=pxoperator'
 <div class="buttonpad">
 <h5>Step 6: Verify PX Operator is running</h5>
 <button class="copy-button px-button" data-clipboard-action="copy" data-clipboard-target="#copystep5">Copy</button>
-  <p style="font-style: italic;">Double check PX operator was successfully installed before proceeding to the next step. Make sure the pod is on a "Running" state</p>
-</div>
+  <p style="font-style: italic;">Double check PX operator was successfully installed before proceeding to the next step. Make sure the pod is on a "Running" state.</p>
+<img src="operator.png" width="1000" height="31" alt=""/></div>
 <div id="copystep5">
 <code>
 kubectl get pods -n kube-system -o wide | grep portworx-operator 
@@ -114,10 +129,12 @@ kubectl get pods -n kube-system -o wide | grep portworx-operator
 <div class="buttonpad">
 <h5>Step 7: Install PortWorx 2.12 Spec using FlashArray Cloud Drives</h5>
 <button class="copy-button px-button" data-clipboard-action="copy" data-clipboard-target="#copystep6">Copy</button>
-  <p style="font-style: italic;">The PX spec script will intall portworx to all of the nodes</p>
+  <p style="font-style: italic;">The PX spec script will intall portworx to all of the nodes.</p>
 </div>
 <div id="copystep6">
 <code>
+cd /home/pureuser/skytap-px-2.12
+</br>
 kubectl apply -f px-spec-2.12.yaml
 </br>
 </code>
@@ -128,7 +145,7 @@ kubectl apply -f px-spec-2.12.yaml
 <h5>Step 8: Wait for Portworx Installation to complete</h5>
 <button class="copy-button px-button" data-clipboard-action="copy" data-clipboard-target="#copystep7">Copy</button>
   <p style="font-style: italic;">Make sure there are 3 PX pods running before proceeding to the next step. All 3 PX pods should show 2/2 on the READY column. This will take 10-20mins to complete. Please be patient. Press Cntrl C when finished.&nbsp;</p>
-</div>
+<img src="pxrunning.png" width="1224" height="80" alt=""/></div>
 <div id="copystep7">
 <code>
 watch kubectl get pods -n portworx -l name=portworx -o wide
@@ -137,17 +154,17 @@ watch kubectl get pods -n portworx -l name=portworx -o wide
 </div>
 
 <div class="buttonpad">
-<h5>Inspect the Postgres Volume</h5>
-<button class="copy-button px-button" data-clipboard-action="copy" data-clipboard-target="#copystep11">Copy</button>
-  <p style="font-style: italic;">These commands get the ID of the volume then find a portworx node to issue the `pxctl` command to inspect the volumes. `pxctl` is the Portworx CLI. </p>
+<h5> Step 9: Verify Portworx has been successfully installed</h5>
+<button class="copy-button px-button" data-clipboard-action="copy" data-clipboard-target="#copystep8">Copy</button>
+  <p style="font-style: italic;">These commands will find a portworx node to issue the `pxctl` command to check the status. Portworx "pxctl" command allows you to run PX CLI operations. </p>
 </div>
-<div id="copystep11">
+<div id="copystep8">
   <code>
-VOL=`kubectl get pvc | grep postgres-data | awk '{print $3}'`
+echo "Checking Portworx Status"
 </br>
-PX_POD=$(kubectl get pods -l name=portworx -n kube-system -o jsonpath='{.items[0].metadata.name}')
+PX_POD=$(kubectl get pods -l name=portworx -n portworx -o jsonpath='{.items[0].metadata.name}')
 </br>
-kubectl exec -it $PX_POD -n kube-system -c portworx -- /opt/pwx/bin/pxctl volume inspect ${VOL}<br>
+kubectl exec -it $PX_POD -n portworx -- /opt/pwx/bin/pxctl status
 </code>
 </div>
 
@@ -264,10 +281,10 @@ kubectl get pvc px-postgres-snap-clone<br>
 
 <div class="buttonpad">
         <h5>Restore Database</h5>
-        <button class="copy-button px-button" data-clipboard-action="copy" data-clipboard-target="#copystep8">Copy</button>
+        <button class="copy-button px-button" data-clipboard-action="copy" data-clipboard-target="#copystep88">Copy</button>
         <p style="font-style: italic;">These commands will delete the existing Postgres database and use a snapshot to restore the data. We will also scale the web-front end down and then back up so it reconnects to our newly restored database.</p>
 </div>
-<div id="copystep8">
+<div id="copystep88">
 <code>
 kubectl delete -f postgres-db.yaml
 </br>
