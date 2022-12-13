@@ -17,7 +17,7 @@
 </div>
 
 <dive>
-  <p style="font-weight: bolder;"> This is the step by step procedure to successfuly install Portworx 2.12 in a 3 node cluster using FlashArray Cloud Drives and deploy a simple application. Learners can skip the installation steps by running the install scrpit below and skip to Step 10.&nbsp; &nbsp;&nbsp; <a href="http://master.portworx.testdrive:30123/" target="_blank">http://master.portworx.testdrive:30123/</a>
+  <p style="font-weight:"> This is a step by step procedure to manually install Portworx v2.12 in a 3 node cluster using FlashArray Cloud Drives and deploy a simple application. Learners can skip the installation steps by running the install script below and skip to Step X.&nbsp; &nbsp;&nbsp; <a href="http://master.portworx.testdrive:30123/" target="_blank">http://master.portworx.testdrive:30123/</a>
   </p>
 </dive>
 
@@ -144,7 +144,7 @@ kubectl apply -f px-spec-2.12.yaml
 <div class="buttonpad">
 <h5>Step 8: Wait for Portworx Installation to complete</h5>
 <button class="copy-button px-button" data-clipboard-action="copy" data-clipboard-target="#copystep7">Copy</button>
-  <p style="font-style: italic;">Make sure there are 3 PX pods running before proceeding to the next step. All 3 PX pods should show 2/2 on the READY column. This will take 10-20mins to complete. Please be patient. Press Cntrl C when finished.&nbsp;</p>
+  <p style="font-style: italic;">Make sure there are 3 PX pods running before proceeding to the next step. All 3 PX pods should show 2/2 on the READY column. This will take 10-20mins to complete. Please be patient. Press "CTRL C" when   finished.&nbsp;</p>
 <img src="pxrunning.png" width="1224" height="80" alt=""/></div>
 <div id="copystep7">
 <code>
@@ -168,6 +168,23 @@ kubectl exec -it $PX_POD -n portworx -- /opt/pwx/bin/pxctl status
 </code>
 </div>
 
+<div class="buttonpad">
+<h5> Step 10: Install Grafana</h5>
+<button class="copy-button px-button" data-clipboard-action="copy" data-clipboard-target="#copystep9">Copy</button>
+  <p style="font-style: italic;">These commands will configure and install Grafana for Portworx GUI Monitoring. After installation, login and configure Grafana using default user: admin / password: admin.&nbsp; &nbsp;</p>
+  <a href="http://10.0.0.30:30196" target="_blank">http://10.0.0.30:30196</a>
+</div>
+<div id="copystep9">
+<code>
+cd /home/pureuser/skytap-px-2.12
+</br>
+kubectl -n portworx create configmap grafana-dashboard-config --from-file=grafana-dashboard-config.yaml
+</br>
+kubectl -n portworx create configmap grafana-source-config --from-file=grafana-datasource.yaml
+</br>
+kubectl apply -f grafana.yaml
+</code>
+</div>
 
 <div class="buttonpad">
         <h5>Enter the postgres Pod shell</h5>
